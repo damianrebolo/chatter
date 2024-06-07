@@ -44,5 +44,9 @@ export default config;
 ```
 
 ```shell
+npx hardhat vars set ALCHEMY_API_KEY
+npx hardhat vars set OWNER_PRIVATE_KEY
+npx hardhat vars set ETHERSCAN_API_KEY
+
 npx hardhat ignition deploy ignition/modules/Lock.ts --network sepolia --verify
 ```

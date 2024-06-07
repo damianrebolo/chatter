@@ -1,11 +1,10 @@
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
 
-import { cookieStorage, createStorage } from "wagmi";
-import { mainnet, sepolia, Chain } from "wagmi/chains";
+import { cookieStorage, createStorage, http, webSocket } from "wagmi";
+import { sepolia, Chain } from "wagmi/chains";
 
 // Get projectId at https://cloud.walletconnect.com
-export const projectId = "cfb91b538070178dfeafb31e20837b58";
-// export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
+export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
 if (!projectId) throw new Error("Project ID is not defined");
 
@@ -32,7 +31,7 @@ const localhost: Chain = {
 };
 
 // Create wagmiConfig
-const chains = [localhost] as const;
+const chains = [localhost, sepolia] as const;
 export const config = defaultWagmiConfig({
   chains,
   projectId,
@@ -41,4 +40,12 @@ export const config = defaultWagmiConfig({
   storage: createStorage({
     storage: cookieStorage,
   }),
+  transports: {
+    // [sepolia.id]: http(
+    //   "https://eth-sepolia.g.alchemy.com/v2/huhXIAalZtThV0VrE0Fm2P8q1SqdoIw-"
+    // ),
+    [sepolia.id]: webSocket(
+      "wss://eth-sepolia.g.alchemy.com/v2/huhXIAalZtThV0VrE0Fm2P8q1SqdoIw-"
+    ),
+  },
 });

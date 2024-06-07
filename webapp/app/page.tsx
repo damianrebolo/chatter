@@ -1,24 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWriteContract, useWatchContractEvent, useAccount } from "wagmi";
 import { Log } from "viem";
 import { abi } from "@/contracts";
 import JazziconImage from "./components/Icon";
 
-const chatterAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
+const chatterAddress = "0xfe91fB5c18689B8a51d3659708E0d3c106FD124C";
+const fromBlock = BigInt(6055894);
 
 export default function Home() {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Log[]>([]);
-  const { writeContract } = useWriteContract();
-  const { address, isConnected, isConnecting } = useAccount();
+  const { writeContractAsync } = useWriteContract();
+  const { address } = useAccount();
 
   useWatchContractEvent({
     address: chatterAddress,
     abi,
     eventName: "NewMessage",
-    fromBlock: BigInt(0),
+    fromBlock: fromBlock,
+    batch: false,
+    syncConnectedChain: true,
     onLogs: (logs) => {
       setMessages(logs);
     },
@@ -28,13 +31,15 @@ export default function Home() {
   });
 
   const onMessageSend = async () => {
-    writeContract({
+    writeContractAsync({
       abi: abi,
       address: chatterAddress,
       functionName: "chat",
       args: [message],
+    }).then((tx) => {
+      console.log("Transaction", tx);
+      setMessage("");
     });
-    setMessage("");
   };
 
   return (
@@ -75,6 +80,7 @@ export default function Home() {
         <div className="w-full flex justify-between items-center">
           <input
             type="text"
+            value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Hi There..."
             className="w-full mr-2 border rounded-md border-gray-300 p-2 text-sm"

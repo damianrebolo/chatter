@@ -41,11 +41,8 @@ export const config = defaultWagmiConfig({
     storage: cookieStorage,
   }),
   transports: {
-    // [sepolia.id]: http(
-    //   "https://eth-sepolia.g.alchemy.com/v2/huhXIAalZtThV0VrE0Fm2P8q1SqdoIw-"
-    // ),
     [sepolia.id]: webSocket(
-      "wss://eth-sepolia.g.alchemy.com/v2/huhXIAalZtThV0VrE0Fm2P8q1SqdoIw-"
+      `wss://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
     ),
   },
 });

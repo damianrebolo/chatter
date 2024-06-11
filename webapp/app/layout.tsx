@@ -2,10 +2,12 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 
-import { cookieToInitialState } from "wagmi";
+// import { cookieToInitialState } from "wagmi";
+// import Web3ModalProvider from "@/context";
 
-import { config } from "@/config";
-import Web3ModalProvider from "@/context";
+import { cookieToInitialState } from "@alchemy/aa-alchemy/config";
+import { config } from "@/config/alchemy";
+import { Providers } from "@/context/alchemy";
 
 export const metadata: Metadata = {
   title: "Chatter",
@@ -17,13 +19,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const initialState = cookieToInitialState(config, headers().get("cookie"));
+  const initialState = cookieToInitialState(
+    config,
+    headers().get("cookie") || undefined
+  );
+
   return (
     <html lang="en">
       <body>
-        <Web3ModalProvider initialState={initialState}>
-          {children}
-        </Web3ModalProvider>
+        <Providers initialState={initialState}>{children}</Providers>
       </body>
     </html>
   );

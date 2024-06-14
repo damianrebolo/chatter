@@ -20,13 +20,12 @@ export async function POST(
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      ...req.headers,
     },
     body: JSON.stringify(body),
   });
 
   if (!res.ok) {
-    return NextResponse.json(await res.json().catch((e) => ({})), {
+    return NextResponse.json(await res.json().catch(() => ({})), {
       status: res.status,
     });
   }

@@ -1,12 +1,17 @@
 "use client";
 
-import { useSmartAccountClient, useUser } from "@alchemy/aa-alchemy/react";
+import {
+  useLogout,
+  useSmartAccountClient,
+  useUser,
+} from "@alchemy/aa-alchemy/react";
 
 export const ProfileCard = () => {
   const user = useUser();
   const { address } = useSmartAccountClient({
     type: "MultiOwnerModularAccount",
   });
+  const { logout } = useLogout();
 
   return (
     <div className="flex flex-row rounded-lg bg-white p-10 dark:bg-[#0F172A]">
@@ -24,6 +29,10 @@ export const ProfileCard = () => {
             <div className="text-wrap rounded-lg p-3 dark:bg-[#1F2937] dark:text-[#CBD5E1]">
               {user?.email}
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <button onClick={() => logout()}>Logout</button>
           </div>
         </div>
       </div>

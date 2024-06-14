@@ -1,25 +1,29 @@
-import { cookieToInitialState } from "@alchemy/aa-alchemy/config";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { headers } from "next/headers";
-import { config } from "@/config/alchemy";
 import "./globals.css";
-import { Providers } from "@/context/alchemy";
+import { Providers } from "@/context/Provider";
+import { cookieToInitialState } from "@alchemy/aa-alchemy/config";
+import { headers } from "next/headers";
+import { config } from "@/config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Embedded Accounts Getting Started",
-  description: "Embedded Accounts Quickstart Guide",
+  title: "AA - Chatter",
+  description: "Chatter app sponsored by ME",
 };
 
+// [!region root-layout]
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // This will allow us to persist state across page boundaries
-  const initialState = cookieToInitialState(config, headers().get("cookie"));
+  // hydrate the initial state on the client
+  const initialState = cookieToInitialState(
+    config,
+    headers().get("cookie") ?? undefined
+  );
 
   return (
     <html lang="en">

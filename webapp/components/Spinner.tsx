@@ -5,4 +5,4 @@ export const LoadingSpinner = () => (
       role="status"
     ></div>
   </div>
-);
+)

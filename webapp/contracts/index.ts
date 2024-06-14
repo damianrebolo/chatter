@@ -4,31 +4,31 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "user",
-        type: "address",
+        internalType: 'address',
+        name: 'user',
+        type: 'address'
       },
       {
         indexed: false,
-        internalType: "string",
-        name: "message",
-        type: "string",
-      },
+        internalType: 'string',
+        name: 'message',
+        type: 'string'
+      }
     ],
-    name: "NewMessage",
-    type: "event",
+    name: 'NewMessage',
+    type: 'event'
   },
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_message",
-        type: "string",
-      },
+        internalType: 'string',
+        name: '_message',
+        type: 'string'
+      }
     ],
-    name: "chat",
+    name: 'chat',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-] as const;
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
+] as const

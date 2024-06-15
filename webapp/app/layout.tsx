@@ -4,7 +4,7 @@ import './globals.css';
 import { Providers } from '@/context/Provider';
 import { cookieToInitialState } from '@alchemy/aa-alchemy/config';
 import { headers } from 'next/headers';
-import { config } from '@/config';
+import { config } from '@/config/alchemy';
 
 const inter = Inter({ subsets: ['latin'] });
 

@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react';
 import { useWatchContractEvent } from 'wagmi';
 import { abi } from '@/contracts';
 import { publicClient } from '@/config/viem';
-import { accountType } from '@/config';
+import { accountType } from '@/config/alchemy';
 import { useSmartAccountClient } from '@alchemy/aa-alchemy/react';
 
 const chatterAddress = '0xfe91fB5c18689B8a51d3659708E0d3c106FD124C';
-const fromBlock = BigInt(6113248);
+const fromBlock = BigInt(6113879);
+// const fromBlock = BigInt(6113248);
 
 export default function MessageHistory() {
+  console.log('render');
   const [messages, setMessages] = useState<Log[]>([]);
   const { address } = useSmartAccountClient({
     type: accountType
@@ -26,7 +28,7 @@ export default function MessageHistory() {
       return logs;
     }
     getLogs().then(logData => {
-      setMessages(logData);
+      setMessages(logData.reverse());
     });
   }, []);
 
@@ -39,7 +41,7 @@ export default function MessageHistory() {
     strict: true,
     onLogs: logs => {
       if (logs.length > 0) {
-        setMessages(preLogs => preLogs.concat(logs));
+        setMessages(preLogs => preLogs.concat(preLogs, logs));
       }
     },
     onError(error) {
@@ -48,7 +50,7 @@ export default function MessageHistory() {
   });
 
   return (
-    <div className="scrollbar-thumb-blue scrollbar-track-blue scrollbar-w-2 scrollbar-track-blue-lighter scrolling-touch flex flex-col overflow-y-auto px-2 py-5">
+    <div className="mx-2 mb-2 mt-8 flex h-full w-full flex-grow flex-col-reverse items-end overflow-y-auto">
       {messages.map((log, i) => {
         return (
           <div

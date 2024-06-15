@@ -1,7 +1,7 @@
 'use client';
 
 import { useLogout, useSmartAccountClient, useUser } from '@alchemy/aa-alchemy/react';
-import { accountType } from '@/config';
+import { accountType } from '@/config/alchemy';
 import JazziconImage from './Icon';
 import { Hex } from 'viem';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { accountType } from '@/config';
+import { accountType } from '@/config/alchemy';
 import { useAccount, useAuthenticate } from '@alchemy/aa-alchemy/react';
 import { useCallback, useState } from 'react';
 

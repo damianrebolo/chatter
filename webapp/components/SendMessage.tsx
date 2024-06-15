@@ -1,4 +1,4 @@
-import { accountClientOptions, accountType, gasManagerConfig } from '@/config';
+import { accountClientOptions, accountType, gasManagerConfig } from '@/config/alchemy';
 import { useSmartAccountClient, useSendUserOperation } from '@alchemy/aa-alchemy/react';
 import { MouseEvent, useState } from 'react';
 import { Hex, encodeFunctionData } from 'viem';
@@ -41,7 +41,7 @@ export default function SendMessage() {
   };
 
   return (
-    <div className="flex h-full w-full flex-grow flex-col">
+    <div className="flex w-full flex-col">
       <div className="flex w-full items-center justify-between">
         <input
           type="text"

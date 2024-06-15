@@ -1,9 +1,9 @@
 'use client';
 
-import { AlchemyAccountProvider, AlchemyAccountsProviderProps } from '@alchemy/aa-alchemy/react';
 import { PropsWithChildren } from 'react';
-import { config, queryClient } from '@/config';
 import { WagmiProvider } from 'wagmi';
+import { AlchemyAccountProvider, AlchemyAccountsProviderProps } from '@alchemy/aa-alchemy/react';
+import { config, queryClient } from '@/config/alchemy';
 import { wagmiConfig } from '@/config/wagmi';
 
 // [!region providers]

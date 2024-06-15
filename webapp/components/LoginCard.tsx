@@ -1,16 +1,17 @@
-'use client'
+'use client';
 
-import { useAccount, useAuthenticate } from '@alchemy/aa-alchemy/react'
-import { useCallback, useState } from 'react'
+import { accountType } from '@/config';
+import { useAccount, useAuthenticate } from '@alchemy/aa-alchemy/react';
+import { useCallback, useState } from 'react';
 
 export const LogInCard = () => {
-  const [email, setEmail] = useState<string>('')
-  const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value), [])
-  const { authenticate, isPending: isAuthenticatingUser } = useAuthenticate()
+  const [email, setEmail] = useState<string>('');
+  const onEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value), []);
+  const { authenticate, isPending: isAuthenticatingUser } = useAuthenticate();
   const { isLoadingAccount } = useAccount({
-    type: 'MultiOwnerModularAccount',
+    type: accountType,
     skipCreate: true
-  })
+  });
 
   return (
     <div className="flex min-w-80 flex-row justify-center rounded-lg bg-white p-10 dark:bg-[#0F172A]">
@@ -37,5 +38,5 @@ export const LogInCard = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};

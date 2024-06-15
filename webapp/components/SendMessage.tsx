@@ -40,19 +40,8 @@ export default function SendMessage() {
     });
   };
 
-  const onMessageSend = async () => {
-    // writeContractAsync({
-    //   abi: abi,
-    //   address: chatterAddress,
-    //   functionName: "chat",
-    //   args: [message],
-    // }).then((tx) => {
-    //   console.log("Transaction", tx);
-    //   setMessage("");
-    // });
-  };
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-grow flex-col">
       <div className="flex w-full items-center justify-between">
         <input
           type="text"

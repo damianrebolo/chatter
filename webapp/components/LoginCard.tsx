@@ -14,12 +14,12 @@ export const LogInCard = () => {
   });
 
   return (
-    <div className="flex min-w-80 flex-row justify-center rounded-lg bg-white p-10 dark:bg-[#0F172A]">
+    <div className="m-auto flex min-w-80 flex-row items-center justify-center rounded-lg bg-white p-10">
       {isAuthenticatingUser || isLoadingAccount ? (
         <div className="text-[18px] font-semibold">Check your email!</div>
       ) : (
         <div className="flex flex-col gap-8">
-          <div className="text-[18px] font-semibold">Log in to the Embedded Accounts Demo!</div>
+          <div className="text-[18px] font-semibold">Log in to decentralized Chatter!</div>
           <div className="flex flex-col justify-between gap-6">
             <input
               className="rounded-lg border border-[#CBD5E1] p-3 dark:border-[#475569] dark:bg-slate-700 dark:text-white dark:placeholder:text-[#E2E8F0]"

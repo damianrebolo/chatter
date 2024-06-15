@@ -1,35 +1,35 @@
 'use client';
 
 import { useLogout, useSmartAccountClient, useUser } from '@alchemy/aa-alchemy/react';
-import SendMessage from './SendMessage';
 import { accountType } from '@/config';
+import JazziconImage from './Icon';
+import { Hex } from 'viem';
 
 export const ProfileCard = () => {
   const user = useUser();
-  const { address } = useSmartAccountClient({
+  const { address, isLoadingClient } = useSmartAccountClient({
     type: accountType
   });
   const { logout } = useLogout();
 
-  return (
-    <div className="flex flex-row rounded-lg bg-white p-10 dark:bg-[#f1f3f2]">
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col gap-2">
-          <button onClick={() => logout()}>Logout</button>
-        </div>
+  function shortenAddress(address: string) {
+    return `${address.slice(0, 2)}...${address.slice(-4)}`;
+  }
 
-        <div className="text-lg font-semibold">Welcome to your profile!</div>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <div>Account address</div>
-            <div className="text-wrap rounded-lg p-3 dark:bg-[#1F2937] dark:text-[#CBD5E1]">{address}</div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div>Email</div>
-            <div className="text-wrap rounded-lg p-3 dark:bg-[#1F2937] dark:text-[#CBD5E1]">{user?.email}</div>
-          </div>
-        </div>
-        <SendMessage />
+  if (isLoadingClient) {
+    return null;
+  }
+  return (
+    <div className="flex w-full items-center justify-between">
+      <div className="flex items-center gap-3">
+        <JazziconImage address={address as Hex} className="h-6 w-6 rounded-full" />
+        <div className="text-md">{shortenAddress(address as Hex)}</div>
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="text-md">{user?.email?.split('@')[0]}</div>
+        <button className="text-md rounded-lg border border-cyan-800 p-1 font-semibold" onClick={() => logout()}>
+          Logout
+        </button>
       </div>
     </div>
   );

@@ -2,14 +2,10 @@ import { Log, parseAbiItem } from 'viem';
 import JazziconImage from './Icon';
 import { useEffect, useState } from 'react';
 import { useWatchContractEvent } from 'wagmi';
-import { abi } from '@/contracts';
+import { abi, chatterAddress, fromBlock } from '@/contracts/chatter';
 import { publicClient } from '@/config/viem';
 import { accountType } from '@/config/alchemy';
 import { useSmartAccountClient } from '@alchemy/aa-alchemy/react';
-
-const chatterAddress = '0xfe91fB5c18689B8a51d3659708E0d3c106FD124C';
-const fromBlock = BigInt(6113879);
-// const fromBlock = BigInt(6113248);
 
 export default function MessageHistory() {
   console.log('render');

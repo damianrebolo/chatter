@@ -1,3 +1,5 @@
+import { Hex } from 'viem';
+
 export const abi = [
   {
     anonymous: false,
@@ -31,4 +33,7 @@ export const abi = [
     stateMutability: 'nonpayable',
     type: 'function'
   }
-] as const
+] as const;
+
+export const chatterAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Hex;
+export const fromBlock = BigInt(6113879);

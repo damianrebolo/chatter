@@ -3,7 +3,7 @@ import { useSmartAccountClient, useSendUserOperation } from '@alchemy/aa-alchemy
 import { MouseEvent, useState } from 'react';
 import { Hex, encodeFunctionData } from 'viem';
 import { OpStatus } from './OpStatus';
-import { abi } from '@/contracts';
+import { abi, chatterAddress } from '@/contracts/chatter';
 
 export default function SendMessage() {
   const [message, setMessage] = useState<string>('');
@@ -36,7 +36,7 @@ export default function SendMessage() {
 
     // send the user operation
     sendUserOperation({
-      uo: { target: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Hex, data: uoCallData as Hex }
+      uo: { target: chatterAddress, data: uoCallData as Hex }
     });
   };
 

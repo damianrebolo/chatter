@@ -6,10 +6,15 @@ import { abi, chatterAddress, fromBlock } from '@/contracts/chatter';
 import { publicClient } from '@/config/viem';
 import { accountType } from '@/config/alchemy';
 import { useSmartAccountClient } from '@alchemy/aa-alchemy/react';
+import { GetEventArgs } from 'viem';
 
+type EventArgs = GetEventArgs<typeof abi, 'NewMessage', { IndexedOnly: false }>;
+
+interface ContractLog extends Log {
+  args: EventArgs;
+}
 export default function MessageHistory() {
-  console.log('render');
-  const [messages, setMessages] = useState<Log[]>([]);
+  const [messages, setMessages] = useState<ContractLog[]>([]);
   const { address } = useSmartAccountClient({
     type: accountType
   });
@@ -23,10 +28,12 @@ export default function MessageHistory() {
       });
       return logs;
     }
-    getLogs().then(logData => {
-      setMessages(logData.reverse());
+    getLogs().then((logData: ContractLog[]) => {
+      setMessages(logData.reverse() as ContractLog[]);
     });
   }, []);
+
+  console.log(messages);
 
   useWatchContractEvent({
     address: chatterAddress,
@@ -35,9 +42,9 @@ export default function MessageHistory() {
     batch: false,
     syncConnectedChain: true,
     strict: true,
-    onLogs: logs => {
+    onLogs: (logs: Log[]) => {
       if (logs.length > 0) {
-        setMessages(preLogs => preLogs.concat(preLogs, logs));
+        setMessages(preLogs => preLogs.concat(preLogs, logs as ContractLog[]));
       }
     },
     onError(error) {
@@ -48,26 +55,25 @@ export default function MessageHistory() {
   return (
     <div className="mx-2 mb-2 mt-8 flex h-full w-full flex-grow flex-col-reverse items-end overflow-y-auto">
       {messages.map((log, i) => {
+        const { args } = log;
         return (
           <div
             key={i}
-            className={['flex flex-row items-center gap-2 py-1', address === log.args.user ? 'justify-end' : ''].join(
-              ' '
-            )}
+            className={['flex flex-row items-center gap-2 py-1', address === args?.user ? 'justify-end' : ''].join(' ')}
           >
             <JazziconImage
-              address={log.args.user}
-              className={['h-6 w-6 rounded-full', address == log.args.user ? 'order-2' : ''].join(' ')}
+              address={args?.user!}
+              className={['h-6 w-6 rounded-full', address == args.user ? 'order-2' : ''].join(' ')}
             />
             <div
               className={[
                 'rounded-lg px-4 py-2',
-                log.args.user == address
+                args?.user! == address
                   ? 'rounded-br-none bg-blue-600 text-white'
                   : 'rounded-bl-none bg-gray-300 text-gray-700'
               ].join(' ')}
             >
-              {log.args.message}
+              {args?.message!}
             </div>
           </div>
         );

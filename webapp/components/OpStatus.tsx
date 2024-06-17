@@ -1,13 +1,14 @@
 import { LoadingSpinner } from './Spinner';
 import { SendUserOperationResult } from '@alchemy/aa-core';
 import { chain } from '@/config/alchemy';
+import { Hex } from 'viem';
 
 export const OpStatus = ({
-  sendUserOperationResult,
+  sendUserOperationResultHash,
   isSendingUserOperation,
   isSendUserOperationError
 }: {
-  sendUserOperationResult: SendUserOperationResult | undefined;
+  sendUserOperationResultHash: Hex | undefined;
   isSendingUserOperation: boolean;
   isSendUserOperationError: Error | null;
 }) => {
@@ -20,10 +21,10 @@ export const OpStatus = ({
     return <LoadingSpinner />;
   }
 
-  if (sendUserOperationResult) {
+  if (sendUserOperationResultHash) {
     return (
       <a
-        href={`${chain.blockExplorers?.default.url}/tx/${sendUserOperationResult.hash}`}
+        href={`${chain.blockExplorers?.default.url}/tx/${sendUserOperationResultHash}`}
         target="_blank"
         rel="noopener noreferrer"
         className="text-center text-[#363FF9] hover:underline"

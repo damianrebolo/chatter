@@ -56,7 +56,7 @@ export default function SendMessage() {
       </div>
       <div className="">
         <OpStatus
-          sendUserOperationResult={sendUserOperationResult}
+          sendUserOperationResultHash={sendUserOperationResult?.hash}
           isSendingUserOperation={isSendingUserOperation}
           isSendUserOperationError={isSendUserOperationError}
         />

@@ -33,8 +33,6 @@ export default function MessageHistory() {
     });
   }, []);
 
-  console.log(messages);
-
   useWatchContractEvent({
     address: chatterAddress,
     abi,
